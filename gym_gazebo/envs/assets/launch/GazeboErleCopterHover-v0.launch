@@ -3,7 +3,10 @@
   <arg name="simRate" default="nan"/>
   <!-- Enable simulation clock -->
   <param name="use_sim_time" type="bool" value="true" />
-  <include file="$(find mavros)/launch/apm_sitl.launch"></include>
+  <include file="$(find mavros)/launch/apm_sitl.launch">
+    <!-- <arg name="fcu_url" value="tcp://127.0.0.1:5760@" />
+    <arg name="gcs_url" value="tcp://127.0.0.1:14550" /> -->
+  </include>
 
   <arg name="enable_logging" default="true"/>
   <arg name="enable_ground_truth" default="true"/>
