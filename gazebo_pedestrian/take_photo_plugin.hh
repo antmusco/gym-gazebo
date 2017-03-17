@@ -10,31 +10,42 @@
 
 namespace gazebo {
 
-  class GAZEBO_VISIBLE CameraPlugin : public SensorPlugin {
+/**
+ * Plugin which takes photos from a camera every second.
+ */
+class GAZEBO_VISIBLE CameraPlugin : public SensorPlugin {
 
-    public: CameraPlugin();
+  // Constructor/Destructor.
+  public: CameraPlugin();
+  public: virtual ~CameraPlugin();
 
-    /// \brief Destructor
-    public: virtual ~CameraPlugin();
+  // Load the camera plugin.
+  public: virtual void Load(sensors::SensorPtr _sensor, 
+      sdf::ElementPtr _sdf);
 
-    public: virtual void Load(sensors::SensorPtr _sensor, 
-        sdf::ElementPtr _sdf);
+  // On every frame.
+  public: virtual void OnNewFrame(const unsigned char *_image, 
+      unsigned int _width, unsigned int _height, unsigned int _depth, 
+      const std::string &_format);
 
-    public: virtual void OnNewFrame(const unsigned char *_image, 
-        unsigned int _width, unsigned int _height, unsigned int _depth, 
-        const std::string &_format);
+  // Width, height, and depth of the image.
+  protected: unsigned int width, height, depth;
+  // Format of the image.
+  protected: std::string format;
+  // Frame number (0-30, 30 per second).
+  protected: unsigned int frame_no;
+  // Number of pictures taken.
+  protected: unsigned int pic_no;
 
-    protected: unsigned int width, height, depth;
-    protected: std::string format;
-    protected: unsigned int frame_no;
-    protected: unsigned int pic_no;
+  // Pointer to the CameraSensor.
+  protected: sensors::CameraSensorPtr parentSensor;
+  // Pointer to the Camera.
+  protected: rendering::CameraPtr camera;
 
-    protected: sensors::CameraSensorPtr parentSensor;
-    protected: rendering::CameraPtr camera;
+  // ???
+  private: event::ConnectionPtr newFrameConnection;
 
-    private: event::ConnectionPtr newFrameConnection;
-
-  };
+};
 
 }
 #endif

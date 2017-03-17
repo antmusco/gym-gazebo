@@ -7,17 +7,25 @@
 #include "gazebo/gazebo.hh"
 #include <string>
 
-#define NUM_PERSONS 10
+#define NUM_PERSONS 100
+#define NUM_OBJECTS 100
 
 namespace gazebo {
 
-std::string* person_visuals = nullptr;
+struct ObjectQuantity {
+  int num;
+  const char* name;
+  const char* mesh;
+};
+
 
 class Factory : public WorldPlugin {
 
   public: Factory();
   public: ~Factory();
   public: void Load(physics::WorldPtr _parent, sdf::ElementPtr /*_sdf*/);
+  // Static array of visuals.
+  public: static std::string person_visuals[];
 
 };
 

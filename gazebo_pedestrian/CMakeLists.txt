@@ -7,8 +7,8 @@ list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 # Model factory.
-add_library(factory SHARED factory.cc)
-target_link_libraries(factory ${GAZEBO_LIBRARIES})
+add_library(factory_plugin SHARED factory_plugin.cc)
+target_link_libraries(factory_plugin ${GAZEBO_LIBRARIES})
 
 # HeisenPerson
 add_library(heisen_person_plugin SHARED heisen_person_plugin.cc)

@@ -9,9 +9,9 @@
 
 #define MEAN 0.0
 #define VAR  5.0
-#define Z_OFF 10.0
-#define Z_MIN 5.0
-#define DELAY_TIME 1000
+#define GAMMA_SHAPE 4
+#define GAMMA_SCALE 6
+#define DELAY_TIME 0
 
 
 namespace gazebo {
@@ -27,8 +27,10 @@ namespace gazebo {
   
   class HeisenCamera : public ModelPlugin {
 
-    public: HeisenCamera() : rand_generator(std::random_device{}()), 
-      normal_dist(MEAN, VAR) {
+    public: HeisenCamera() : 
+        rand_generator(std::random_device{}()), 
+        normal_dist(MEAN, VAR),
+        gamma_dist(GAMMA_SHAPE, GAMMA_SCALE){
 
     }
 
@@ -64,10 +66,7 @@ namespace gazebo {
       // Generate x, y, and z coordinates.
       double x = this->normal_dist(this->rand_generator);
       double y = this->normal_dist(this->rand_generator);
-      double z = Z_OFF + this->normal_dist(this->rand_generator);
-
-      // Fix a negative altitude.
-      if(z < Z_MIN) z = Z_OFF - z;
+      double z = this->gamma_dist(this->rand_generator);
 
       // Calculate quaternion and rotation angle to look at 
       // origin.
@@ -94,8 +93,9 @@ namespace gazebo {
     private: event::ConnectionPtr updateConnection;
 
     // Random number generator with a gaussian distribution.
-    private: std::default_random_engine rand_generator;
+    private: std::default_random_engine       rand_generator;
     private: std::normal_distribution<double> normal_dist;
+    private: std::gamma_distribution<double>  gamma_dist;
 
     // Delay in updating.
     private: int delay;

@@ -38,8 +38,8 @@
             <far>100</far>
           </clip>
         </camera>
+        <rate>100</rate>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
         <visualize>true</visualize>
         <plugin name="take_photo_plugin" filename="libtake_photo_plugin.so" />
       </sensor>

@@ -15,15 +15,6 @@
         </inertia>
       </inertial>
 
-      <collision name="bottom">
-        <pose>0 0 0.01 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>0.35 0.75 0.02</size>
-          </box>
-        </geometry>
-      </collision>
-
       <collision name="person">
         <pose>0 0 -0.02 0 0 0</pose>
         <geometry>
